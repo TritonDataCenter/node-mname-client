@@ -1,7 +1,7 @@
 {
   "name": "named-client",
   "description": "DNS client library for node.js",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": "Joyent, Inc",
   "scripts": {
     "test": "tape test/*.test.js"
