@@ -32,7 +32,7 @@ mod_tape.test('look up google.com with 8.8.8.8', function (t) {
 
 	var sock = new mod_nsc.DnsUdpSocket({ family: 'udp4' });
 	sock.on('ready', function () {
-		sock.send(req, { address: '8.8.8.8', port: 53 });;
+		sock.send(req, { address: '8.8.8.8', port: 53 });
 		sock.end();
 	});
 	sock.on('error', function (err) {
@@ -58,7 +58,7 @@ mod_tape.test('look up a non-existent name with 8.8.8.8', function (t) {
 
 	var sock = new mod_nsc.DnsUdpSocket({ family: 'udp4' });
 	sock.on('ready', function () {
-		sock.send(req, { address: '8.8.8.8', port: 53 });;
+		sock.send(req, { address: '8.8.8.8', port: 53 });
 		sock.end();
 	});
 	sock.on('error', function (err) {
