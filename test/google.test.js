@@ -39,3 +39,29 @@ mod_tape.test('look up google.com with 8.8.8.8', function (t) {
 		t.ifError(err);
 	});
 });
+
+mod_tape.test('look up a non-existent name with 8.8.8.8', function (t) {
+	var req = new mod_nsc.DnsMessage();
+	req.addQuestion('does-not-exist.example.com', 'A');
+	t.ok(req.validate());
+
+	req.on('error', function (err) {
+		t.ifError(err);
+	});
+	req.on('reply', function (msg, done) {
+		t.ok(msg.isError());
+		var e = msg.toError();
+		t.strictEqual(e.code, 'NXDOMAIN');
+		done();
+		t.end();
+	});
+
+	var sock = new mod_nsc.DnsUdpSocket({ family: 'udp4' });
+	sock.on('ready', function () {
+		sock.send(req, { address: '8.8.8.8', port: 53 });;
+		sock.end();
+	});
+	sock.on('error', function (err) {
+		t.ifError(err);
+	});
+});
