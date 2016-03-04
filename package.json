@@ -20,11 +20,12 @@
     "node": ">=0.8"
   },
   "dependencies": {
-    "named": "git://github.com/arekinath/node-named#v1.0.4",
-    "assert-plus": ">=0.2.0 <0.3.0"
+    "assert-plus": "^0.2.0",
+    "mooremachine": "^1.2.0",
+    "named": "git://github.com/arekinath/node-named#v1.0.5"
   },
   "devDependencies": {
     "tape": "^4.5.0"
   },
-  "license": "MIT"
+  "license": "MPL-2.0"
 }
