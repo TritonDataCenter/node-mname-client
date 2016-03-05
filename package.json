@@ -1,7 +1,7 @@
 {
   "name": "named-client",
   "description": "DNS client library for node.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Joyent, Inc",
   "scripts": {
     "test": "tape test/*.test.js"
@@ -22,7 +22,7 @@
   "dependencies": {
     "assert-plus": "^0.2.0",
     "mooremachine": "^1.2.0",
-    "named": "git://github.com/arekinath/node-named#v1.0.5"
+    "named": "git://github.com/arekinath/node-named#v1.0.6"
   },
   "devDependencies": {
     "tape": "^4.5.0"
