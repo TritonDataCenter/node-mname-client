@@ -65,3 +65,67 @@ mod_tape.test('look up a non-existent name with 8.8.8.8', function (t) {
 		t.ifError(err);
 	});
 });
+
+mod_tape.test('use the parallel lookup api', function (t) {
+	var client = new mod_nsc.DnsClient({
+		resolvers: ['8.8.8.8', '8.8.4.4']
+	});
+	client.lookup({
+		domain: 'google.com',
+		type: 'A',
+		timeout: 2000
+	}, function (err, msg) {
+		t.ifError(err);
+		t.ok(!msg.isError());
+
+		var ans = msg.getAnswers();
+		t.ok(Array.isArray(ans));
+		t.ok(ans.length > 0);
+		t.strictEqual(ans[0].name, 'google.com');
+		t.strictEqual(ans[0].type, 'A');
+		t.ok(mod_net.isIPv4(ans[0].target));
+
+		client.close();
+
+		t.end();
+	});
+});
+
+mod_tape.test('parallel lookup with failing resolvers', function (t) {
+	var client = new mod_nsc.DnsClient({
+		resolvers: ['192.0.2.1', '192.0.2.3', '8.8.8.8', '8.8.4.4']
+	});
+	client.lookup({
+		domain: 'google.com',
+		type: 'A',
+		timeout: 2000
+	}, function (err, msg) {
+		t.ifError(err);
+		t.ok(!msg.isError());
+
+		var ans = msg.getAnswers();
+		t.ok(Array.isArray(ans));
+		t.ok(ans.length > 0);
+		t.strictEqual(ans[0].name, 'google.com');
+		t.strictEqual(ans[0].type, 'A');
+		t.ok(mod_net.isIPv4(ans[0].target));
+
+		client.close();
+
+		t.end();
+	});
+});
+
+mod_tape.test('parallel lookup timeout', function (t) {
+	var client = new mod_nsc.DnsClient();
+	client.lookup({
+		resolvers: ['192.0.2.1', '192.0.2.3'],
+		domain: 'google.com',
+		type: 'A',
+		timeout: 1000
+	}, function (err, msg) {
+		t.ok(err);
+		client.close();
+		t.end();
+	});
+});
