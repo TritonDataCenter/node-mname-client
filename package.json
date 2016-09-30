@@ -1,5 +1,5 @@
 {
-  "name": "named-client",
+  "name": "mname-client",
   "description": "DNS client library for node.js",
   "version": "0.3.6",
   "author": "Joyent, Inc",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/arekinath/node-named-client.git"
+    "url": "git://github.com/arekinath/node-mname-client.git"
   },
   "main": "lib/index.js",
   "engines": {
@@ -23,7 +23,7 @@
     "assert-plus": "^0.2.0",
     "bloomfilter": "0.0.16",
     "mooremachine": "^2.0.0",
-    "named": "git://github.com/arekinath/node-named#v1.0.8",
+    "mname": "^1.0.8",
     "verror": "^1.6.1"
   },
   "devDependencies": {
