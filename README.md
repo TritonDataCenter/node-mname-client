@@ -1,13 +1,42 @@
 # node-named-client
 
-A DNS client library using the packet parsing/generating code from node-named.
+A DNS client library using the packet parsing/generating code from node-mname.
+
+## Example
+
+```js
+const mod_mname_client = require('mname-client');
+
+var client = new mod_name_client.DnsClient({
+    /* Will try all of the set name servers in parallel. */
+    resolvers: ['8.8.8.8', '8.8.4.4']
+});
+
+client.lookup({
+    domain: 'google.com',
+    type: 'AAAA',
+    timeout: 3000
+}, function (err, message) {
+        if (err) {
+                /* ... */
+                return;
+        }
+        var ans = msg.getAnswers();
+        /* ans will look like: */
+        ans = [ { name: 'google.com',
+          type: 'A',
+          class: 'IN',
+          ttl: 299,
+          target: '216.58.192.14' } ];
+});
+```
 
 ## Example (low-level API)
 
 ```js
-const mod_named_client = require('named-client');
+const mod_mname_client = require('mname-client');
 
-var req = new mod_named_client.DnsMessage();
+var req = new mod_mname_client.DnsMessage();
 
 req.addQuestion('google.com', 'A');
 req.addEDNS({ maxUDPLength: 1480 });
@@ -44,7 +73,7 @@ req.on('reply', function (msg, done) {
   done();
 });
 
-var sock = new mod_named_client.DnsTcpSocket({
+var sock = new mod_mname_client.DnsTcpSocket({
   address: '8.8.8.8',
   port: 53
 });
@@ -66,7 +95,7 @@ sock.on('error', function (err) {
    */
 });
 
-var sock = new mod_named_client.DnsUdpSocket({ family: 'udp4' });
+var sock = new mod_mname_client.DnsUdpSocket({ family: 'udp4' });
 sock.on('ready', function () {
   /*
    * You have to provide a destination to send on a DnsUdpSocket, as you
