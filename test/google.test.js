@@ -50,8 +50,9 @@ mod_tape.test('look up a non-existent name with 8.8.8.8', function (t) {
 	});
 	req.on('reply', function (msg, done) {
 		t.ok(msg.isError());
-		var e = msg.toError();
+		var e = msg.toError('8.8.8.8');
 		t.strictEqual(e.code, 'NXDOMAIN');
+		t.strictEqual(e.resolver, '8.8.8.8');
 		done();
 		t.end();
 	});
