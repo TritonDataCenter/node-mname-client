@@ -92,6 +92,41 @@ mod_tape.test('use the parallel lookup api', function (t) {
 	});
 });
 
+mod_tape.test('filter option', function (t) {
+	var client = new mod_nsc.DnsClient({
+		resolvers: ['8.8.8.8']
+	});
+	client.lookup({
+		domain: 'google.com',
+		type: 'A',
+		timeout: 2000,
+		filter: function (msg) {
+			msg.clearFlag('recursionDesired');
+		}
+	}, function (err, msg) {
+		/*
+		 * This test is kinda crappy, since 8.8.8.8 can return either
+		 * a reasonable response or SERVFAIL to queries without the RD
+		 * bit set. No idea why. It's not RFC-compliant.
+		 */
+		if (err) {
+			var errs = err.errors();
+			err = errs[0];
+			t.strictEqual(err.code, 'SERVFAIL');
+		} else {
+			t.ok(!msg.isError());
+			t.ok(msg.getAnswers().length > 0);
+
+			t.ok(!msg.testFlag('rd'));
+			t.ok(msg.testFlag('ra'));
+		}
+
+		client.close();
+
+		t.end();
+	});
+});
+
 mod_tape.test('parallel lookup with failing resolvers', function (t) {
 	var client = new mod_nsc.DnsClient({
 		resolvers: ['192.0.2.1', '192.0.2.3', '8.8.8.8', '8.8.4.4']
