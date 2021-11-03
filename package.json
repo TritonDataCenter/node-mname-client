@@ -1,7 +1,7 @@
 {
   "name": "mname-client",
   "description": "DNS client library for node.js",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "author": "Joyent, Inc",
   "scripts": {
     "test": "tape test/*.test.js"
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/arekinath/node-mname-client.git"
+    "url": "https://github.com/arekinath/node-mname-client.git"
   },
   "main": "lib/index.js",
   "engines": {
